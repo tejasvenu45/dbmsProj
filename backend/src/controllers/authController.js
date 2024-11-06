@@ -16,7 +16,7 @@ export const register = async (req, res) => {
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const sql = `INSERT INTO users (name, email, password, phone, sports, is_admin) VALUES (?, ?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO users (name, email, password, phone, sports, isAdmin) VALUES (?, ?, ?, ?, ?, ?)`;
         db.query(sql, [name, email, hashedPassword, phone, sports, isAdmin ? 1 : 0], (err, result) => {
             if (err) {
                 if (err.code === 'ER_DUP_ENTRY') {

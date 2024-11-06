@@ -1,9 +1,9 @@
-// Login.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import bg from '../assets/bg.jpg';
-
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,6 +16,7 @@ const Login = () => {
         password,
       });
       console.log('Login successful:', response.data);
+      navigate("/");
     } catch (err) {
       setError('Login failed. Please check your credentials and try again.');
     }
@@ -29,7 +30,7 @@ const Login = () => {
       <div className="w-full max-w-md p-8 space-y-6 bg-black bg-opacity-75 rounded-lg shadow-2xl backdrop-blur-sm">
         <h2 className="text-3xl font-semibold text-center text-white">Login</h2>
 
-        {/* Form */}
+     
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-2xl font-medium text-white">
@@ -63,7 +64,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Error Message */}
+         
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <button

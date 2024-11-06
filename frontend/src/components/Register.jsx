@@ -1,4 +1,3 @@
-// Register.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import bg from '../assets/bg.jpg';
@@ -9,7 +8,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [sports, setSports] = useState('');
-  const [isAdmin, setIsAdmin] = useState(0); // New state for admin checkbox
+  const [isAdmin, setIsAdmin] = useState(0); 
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -21,7 +20,7 @@ const Register = () => {
         password,
         phone,
         sports,
-        isAdmin, // Include isAdmin in the registration data
+        isAdmin, 
       });
       console.log('Registration successful:', response.data);
     } catch (err) {
@@ -40,7 +39,7 @@ const Register = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */}
+    
           <div>
             <label htmlFor="name" className="block text-2xl font-medium text-white">Name</label>
             <input
@@ -55,7 +54,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Email */}
           <div>
             <label htmlFor="email" className="block text-2xl font-medium text-white">Email</label>
             <input
@@ -70,7 +68,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label htmlFor="password" className="block text-2xl font-medium text-white">Password</label>
             <input
@@ -85,7 +82,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Phone */}
           <div>
             <label htmlFor="phone" className="block text-2xl font-medium text-white">Phone</label>
             <input
@@ -100,7 +96,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Sports */}
           <div>
             <label htmlFor="sports" className="block text-2xl font-medium text-white">Sports</label>
             <input
@@ -115,7 +110,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Admin Checkbox */}
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -128,10 +122,8 @@ const Register = () => {
             <label htmlFor="admin" className="ml-2 text-white text-xl">Register as Admin</label>
           </div>
 
-          {/* Error Message */}
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-2 mt-4 text-black bg-white border border-white rounded-md hover:bg-gray-200 focus:ring focus:ring-white focus:outline-none"

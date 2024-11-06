@@ -1,11 +1,11 @@
 // Home.jsx
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-
+import Footer from './Footer';
 const Home = () => {
   return (
     <div className="min-h-screen bg-white text-black">
-      {/* Navbar */}
+
       <nav className="bg-black text-white shadow-lg">
         <div className="container mx-auto p-4 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">
@@ -13,6 +13,9 @@ const Home = () => {
           </h1>
 
           <ul className="hidden md:flex space-x-6 text-lg">
+          <li>
+              <Link to="/" className="hover:text-gray-300">HOME</Link>
+            </li>
             <li>
               <Link to="/login" className="hover:text-gray-300">LOGIN</Link>
             </li>
@@ -27,7 +30,6 @@ const Home = () => {
             </li>
           </ul>
 
-          {/* Mobile Menu Button */}
           <button className="md:hidden focus:outline-none text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +43,6 @@ const Home = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         <div className="md:hidden">
           <ul className="p-4 bg-black text-white space-y-2">
             <li>
@@ -60,9 +61,9 @@ const Home = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
       <main >
         <Outlet />
+        <Footer/>
       </main>
     </div>
   );
