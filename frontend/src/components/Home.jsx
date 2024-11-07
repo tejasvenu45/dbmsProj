@@ -62,6 +62,7 @@ const Home = () => {
       </nav>
 
       <main >
+        
         <Outlet />
         <Footer/>
       </main>

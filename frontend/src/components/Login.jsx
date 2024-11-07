@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import bg from '../assets/bg.jpg';
 import { useNavigate } from 'react-router-dom';
+import { MyContext } from "../MyContext"; 
+
 const Login = () => {
   const navigate = useNavigate();
+  const { setIsLoggedIn, setIsAdmin } = useContext(MyContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,8 +18,17 @@ const Login = () => {
         email,
         password,
       });
+
       console.log('Login successful:', response.data);
-      navigate("/");
+      
+      
+      const user = response.data.user;
+      setIsLoggedIn(true); 
+
+      
+      setIsAdmin(user.isAdmin === 1); 
+      alert("Login Successful");
+      navigate("/"); 
     } catch (err) {
       setError('Login failed. Please check your credentials and try again.');
     }
@@ -30,7 +42,6 @@ const Login = () => {
       <div className="w-full max-w-md p-8 space-y-6 bg-black bg-opacity-75 rounded-lg shadow-2xl backdrop-blur-sm">
         <h2 className="text-3xl font-semibold text-center text-white">Login</h2>
 
-     
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-2xl font-medium text-white">
@@ -64,7 +75,6 @@ const Login = () => {
             />
           </div>
 
-         
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <button
