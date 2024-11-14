@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import bg from '../assets/bg.jpg';
-
+import { useNavigate } from 'react-router-dom';
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ const Register = () => {
   const [sports, setSports] = useState('');
   const [isAdmin, setIsAdmin] = useState(0); 
   const [error, setError] = useState('');
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -22,7 +22,10 @@ const Register = () => {
         sports,
         isAdmin, 
       });
+
       console.log('Registration successful:', response.data);
+      navigate('/login');
+
     } catch (err) {
       setError('Registration failed. Please check your details and try again.');
     }

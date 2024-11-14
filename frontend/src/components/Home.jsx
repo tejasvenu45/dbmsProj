@@ -4,10 +4,16 @@ import { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import Footer from './Footer';
 import { MyContext } from "../MyContext";
-
+import { useNavigate } from 'react-router-dom';
 const Home = () => {
-  const { isAdmin } = useContext(MyContext);
-
+  const navigate = useNavigate();
+  const { isAdmin, isLoggedIn,setIsLoggedIn,setIsAdmin,setUserId } = useContext(MyContext);
+  const logout = ()=>{
+    setIsLoggedIn(false);
+    setIsAdmin(false);
+    setUserId(null);
+    navigate('/');
+  }
   return (
     <div className="min-h-screen bg-white text-black">
 
@@ -21,12 +27,20 @@ const Home = () => {
             <li>
               <Link to="/" className="hover:text-gray-300">HOME</Link>
             </li>
-            <li>
-              <Link to="/login" className="hover:text-gray-300">LOGIN</Link>
-            </li>
-            <li>
-              <Link to="/register" className="hover:text-gray-300">REGISTER</Link>
-            </li>
+
+
+
+
+            {!isLoggedIn && (
+              <div className='flex flex-row gap-4'>
+                <li>
+                  <Link to="/login" className="hover:text-gray-300">LOGIN</Link>
+                </li>
+                <li>
+                  <Link to="/register" className="hover:text-gray-300">REGISTER</Link>
+                </li>
+              </div>
+            )}
 
             {isAdmin && (
               <div className='flex flex-row gap-4'>
@@ -45,6 +59,14 @@ const Home = () => {
             <li>
               <Link to="/products" className="hover:text-gray-300">PRODUCTS</Link>
             </li>
+            
+            {isLoggedIn && (
+              <div className='flex flex-row gap-4'>
+                <li>
+              <button onClick={logout}> LOGOUT</button>
+            </li>
+              </div>
+            )}
           </ul>
 
           <button className="md:hidden focus:outline-none text-white">
