@@ -7,9 +7,9 @@ import { MyContext } from "../MyContext";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  const [userId, setUserId] = useState('');
+  // const [userId, setUserId] = useState('');
   const [address, setAddress] = useState('');
-  const { isLoggedIn } = useContext(MyContext);
+  const { isLoggedIn, userId } = useContext(MyContext);
   const [premiumProducts, setPremiumProducts] = useState([]);
 
   const navigate = useNavigate();
@@ -79,7 +79,6 @@ const Products = () => {
       const response = await axios.post('http://localhost:5000/api/orders/create', orderData);
       alert('Order created successfully!');
       setCart([]);
-      setUserId('');
       setAddress('');
     } catch (error) {
       console.error('Error creating order:', error);
@@ -168,7 +167,7 @@ const Products = () => {
         <div className="mt-8">
           <h3 className="text-xl font-semibold mb-4">Order Details</h3>
           <div className="space-y-4">
-            <div>
+            {/* <div>
               <label className="block text-lg mb-2">User ID</label>
               <input
                 type="number"
@@ -176,7 +175,7 @@ const Products = () => {
                 onChange={(e) => setUserId(e.target.value)}
                 className="w-full px-4 py-2 bg-gray-700 text-white rounded-md"
               />
-            </div>
+            </div> */}
             <div>
               <label className="block text-lg mb-2">Address</label>
               <input

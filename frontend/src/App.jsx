@@ -14,9 +14,9 @@ import { MyContext } from "./MyContext";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [userId, setUserId] = useState(null);
   return (
-    <MyContext.Provider value={{ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }}>
+    <MyContext.Provider value={{ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin, userId, setUserId }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}>

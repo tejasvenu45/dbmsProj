@@ -6,7 +6,7 @@ import { MyContext } from "../MyContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setIsLoggedIn, setIsAdmin } = useContext(MyContext); 
+  const { setIsLoggedIn, setIsAdmin, setUserId } = useContext(MyContext); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -25,7 +25,7 @@ const Login = () => {
       const user = response.data.user;
       setIsLoggedIn(true); 
 
-      
+      setUserId(user.id);
       setIsAdmin(user.isAdmin === 1); 
       alert("Login Successful");
       navigate("/"); 

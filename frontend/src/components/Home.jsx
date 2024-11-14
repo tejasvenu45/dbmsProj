@@ -36,6 +36,9 @@ const Home = () => {
                 <li>
                   <Link to="/adminProd" className="hover:text-gray-300">PRODUCT MANAGEMENT</Link>
                 </li>
+                <li>
+                  <Link to="/supplier" className="hover:text-gray-300">SUPPLIER</Link>
+                </li>
               </div>
             )}
 

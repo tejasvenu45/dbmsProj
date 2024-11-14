@@ -34,14 +34,12 @@ const Supplier = () => {
       className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
-      {/* Overlay for the background */}
-      <div className="absolute inset-0 bg-black opacity-75"></div>
 
-      {/* Container for Product and Total Price */}
+      
       <div className="relative w-11/12 md:w-9/12 bg-black bg-opacity-90 p-8 rounded-lg shadow-lg space-y-6">
         <h2 className="text-4xl font-semibold text-center text-white">Supplier Products</h2>
 
-        {/* Total Price Card */}
+   
         {totalPrice && (
           <div className="bg-gray-800 p-4 rounded-lg text-center text-white text-lg font-semibold shadow-lg">
             Total price in inventory: ${totalPrice}
