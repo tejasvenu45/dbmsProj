@@ -17,4 +17,24 @@ export const getAllSuppliers = (req, res) => {
     });
 };
 
+export const getAllProductsWithSupplier = async (req, res) => {
+    const sql = `
+        SELECT p.id, p.name, p.price, p.description, 
+               s.name AS supplier_name, s.phone AS supplier_phone, s.address AS supplier_address
+        FROM products p
+        JOIN suppliers s ON p.supplier_id = s.id;
+    `;
+
+    try {
+        // Execute the SQL query
+        const [results] = await db.execute(sql);
+        
+        // Send the result as a JSON response
+        res.status(200).json({ products: results });
+    } catch (err) {
+        // Handle any errors that occur during the query
+        res.status(500).json({ error: err.message });
+    }
+};
+
 

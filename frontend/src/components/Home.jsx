@@ -1,8 +1,13 @@
 // Home.jsx
 import React from 'react';
+import { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import Footer from './Footer';
+import { MyContext } from "../MyContext";
+
 const Home = () => {
+  const { isAdmin } = useContext(MyContext);
+
   return (
     <div className="min-h-screen bg-white text-black">
 
@@ -13,7 +18,7 @@ const Home = () => {
           </h1>
 
           <ul className="hidden md:flex space-x-6 text-lg">
-          <li>
+            <li>
               <Link to="/" className="hover:text-gray-300">HOME</Link>
             </li>
             <li>
@@ -22,9 +27,18 @@ const Home = () => {
             <li>
               <Link to="/register" className="hover:text-gray-300">REGISTER</Link>
             </li>
-            <li>
-              <Link to="/orders" className="hover:text-gray-300">ORDERS</Link>
-            </li>
+
+            {isAdmin && (
+              <div className='flex flex-row gap-4'>
+                <li>
+                  <Link to="/orders" className="hover:text-gray-300">ORDERS</Link>
+                </li>
+                <li>
+                  <Link to="/adminProd" className="hover:text-gray-300">PRODUCT MANAGEMENT</Link>
+                </li>
+              </div>
+            )}
+
             <li>
               <Link to="/products" className="hover:text-gray-300">PRODUCTS</Link>
             </li>
@@ -51,6 +65,7 @@ const Home = () => {
             <li>
               <Link to="/register" className="block hover:text-gray-300">Register</Link>
             </li>
+
             <li>
               <Link to="/orders" className="block hover:text-gray-300">Orders</Link>
             </li>
@@ -62,9 +77,9 @@ const Home = () => {
       </nav>
 
       <main >
-        
+
         <Outlet />
-        <Footer/>
+        <Footer />
       </main>
     </div>
   );

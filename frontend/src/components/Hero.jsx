@@ -10,7 +10,7 @@ const Hero = () => {
     const { isLoggedIn, isAdmin } = useContext(MyContext);
     return (
         <>
-            <div className="flex justify-center items-center h-24 bg-gray-100">
+            {/* <div className="flex justify-center items-center h-24 bg-gray-100">
                 <div className="text-center p-6 bg-white shadow-xl rounded-lg">
                     {isLoggedIn && isAdmin ? (
                         <h1 className="text-4xl font-bold text-blue-600">Welcome Admin!</h1>
@@ -20,7 +20,7 @@ const Hero = () => {
                         <h1 className="text-4xl font-bold text-gray-500">Please Log In</h1>
                     )}
                 </div>
-            </div>
+            </div> */}
             <section
                 className="relative flex items-center justify-center h-screen bg-cover bg-center"
                 style={{ backgroundImage: `url(${bg})` }}
