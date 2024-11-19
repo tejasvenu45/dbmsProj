@@ -1,0 +1,104 @@
+mysql>  CREATE TABLE product_log (
+    ->     log_id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     product_id INT NOT NULL,
+    ->     action VARCHAR(50) NOT NULL,
+    ->     old_price DECIMAL(10, 2),
+    ->     new_price DECIMAL(10, 2),
+    ->     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ->     FOREIGN KEY (product_id) REFERENCES products(id)
+    -> );
+
+DELIMITER //
+
+CREATE TRIGGER product_update_log AFTER UPDATE ON products
+FOR EACH ROW
+BEGIN
+    INSERT INTO product_log (product_id, action, old_price, new_price, modified_at)
+    VALUES (OLD.id, 'update', OLD.price, NEW.price, NOW());
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE AddProduct(
+    IN p_name VARCHAR(100),
+    IN p_price DECIMAL(10, 2),
+    IN p_description TEXT,
+    IN p_supplier_id INT
+)
+BEGIN
+    INSERT INTO products (name, price, description, supplier_id)
+    VALUES (p_name, p_price, p_description, p_supplier_id);
+END //
+DELIMITER ;
+
+
+ALTER TABLE product_log
+DROP FOREIGN KEY product_log_ibfk_1;
+
+ALTER TABLE product_log
+ADD CONSTRAINT product_log_ibfk_1
+FOREIGN KEY (product_id) REFERENCES products(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+CREATE VIEW ProductView AS
+SELECT 
+    products.id AS product_id,
+    products.name AS product_name,
+    products.price,
+    products.description,
+    suppliers.name AS supplier_name
+FROM 
+    products
+LEFT JOIN 
+    suppliers ON products.supplier_id = suppliers.id;
+
+
+CREATE TABLE order_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    address VARCHAR(255) NOT NULL,
+    total_amount DECIMAL(10,2) DEFAULT 0.00,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+
+DELIMITER //
+
+CREATE TRIGGER before_product_delete
+BEFORE DELETE ON products
+FOR EACH ROW
+BEGIN
+    INSERT INTO order_history (user_id, order_date, address, total_amount, product_id, quantity)
+    SELECT o.user_id, o.order_date, o.address, o.total_amount, op.product_id, op.quantity
+    FROM orders AS o
+    INNER JOIN order_products AS op ON o.id = op.order_id
+    WHERE op.product_id = OLD.id;
+END //
+
+DELIMITER ;
+
+
+
+DELIMITER //
+
+CREATE TRIGGER after_product_delete
+AFTER DELETE ON products
+FOR EACH ROW
+BEGIN
+  -- Insert order details with the deleted product into order_history
+  INSERT INTO order_history (user_id, order_date, address, total_amount, product_id, quantity)
+  SELECT o.user_id, o.order_date, o.address, o.total_amount, op.product_id, op.quantity
+  FROM orders o
+  JOIN order_products op ON o.id = op.order_id
+  WHERE op.product_id = OLD.id;
+END //
+
+DELIMITER ;

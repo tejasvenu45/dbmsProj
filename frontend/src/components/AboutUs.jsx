@@ -4,17 +4,17 @@ import bg from '../assets/bg.jpg';
 
 const testimonials = [
     {
-        name: "Alex Johnson",
+        name: "Tejas Venugopalan",
         feedback:
             "I love the quality of their products. The performance and durability are unmatched. Highly recommend for any sports enthusiast!",
     },
     {
-        name: "Samantha Lee",
+        name: "Adarash nayak",
         feedback:
             "A fantastic store with a wide range of sports gear. They have everything I need, from shoes to accessories, all in one place!",
     },
     {
-        name: "David Smith",
+        name: "Suraj SilicoFlare",
         feedback:
             "Excellent customer service and top-notch products. I've never been disappointed with a purchase from this store.",
     },

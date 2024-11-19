@@ -86,3 +86,19 @@ export const getTotalProductPrice = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+
+
+export const getProductsView = async (req, res) => {
+    const sql = `
+        SELECT * FROM ProductView
+    `;
+    try {
+        const [results] = await db.execute(sql);
+        res.status(200).json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+

@@ -4,6 +4,8 @@ import bg from '../assets/bg.jpg';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [historyLogs, setHistoryLogs] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -18,13 +20,25 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
+  const toggleHistoryLogs = async () => {
+    if (!showHistory) {
+      try {
+        const response = await axios.get('http://localhost:5000/api/orders/hisLogs');
+        setHistoryLogs(response.data.products);
+      } catch (error) {
+        console.error('Error fetching history logs:', error);
+      }
+    }
+    setShowHistory(!showHistory);
+  };
+
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="w-full max-w-4xl m-2 p-8 space-y-6 bg-black bg-opacity-50 rounded-lg shadow-2xl backdrop-blur-sm">
-        <h2 className="text-4xl font-semibold text-center text-white mb-8">Order History</h2>
+        <h2 className="text-4xl font-semibold text-center text-white mb-8">Orders</h2>
 
         {orders.map((order) => (
           <div key={order.orderId} className="bg-white bg-opacity-90 p-6 rounded-lg shadow-md mb-4">
@@ -48,6 +62,34 @@ const Orders = () => {
             </ul>
           </div>
         ))}
+
+        <button
+          onClick={toggleHistoryLogs}
+          className="mt-4 bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
+        >
+          {showHistory ? 'Hide Order History' : 'View Order History'}
+        </button>
+
+        {showHistory && (
+          <div className="mt-8 w-full bg-white bg-opacity-90 p-6 rounded-lg shadow-md">
+            <h3 className="text-3xl font-semibold text-center text-black mb-4">History Logs</h3>
+            {historyLogs.length > 0 ? (
+              historyLogs.map((log) => (
+                <div key={log.id} className="border-b border-gray-300 py-4">
+                  <p className="text-lg text-gray-800"><strong>User ID:</strong> {log.user_id}</p>
+                  <p className="text-lg text-gray-800"><strong>Order Date:</strong> {new Date(log.order_date).toLocaleDateString()}</p>
+                  <p className="text-lg text-gray-800"><strong>Address:</strong> {log.address}</p>
+                  <p className="text-lg text-gray-800"><strong>Total Amount:</strong> ${log.total_amount}</p>
+                  <p className="text-lg text-gray-800"><strong>Product ID:</strong> {log.product_id}</p>
+                  <p className="text-lg text-gray-800"><strong>Quantity:</strong> {log.quantity}</p>
+                  <p className="text-lg text-gray-800"><strong>Deleted At:</strong> {new Date(log.deleted_at).toLocaleString()}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-lg text-gray-800 text-center">No history logs available.</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -120,3 +120,26 @@ export const getAllOrders = async (req, res) => {
     connection.release();  // Release the connection back to the pool
   }
 };
+
+
+export const getOrderHistory = async (req, res) => {
+  const sql = 'SELECT * FROM order_history';
+
+  try {
+      const [results] = await db.execute(sql);
+      res.status(200).json({ products: results });
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+};
+
+export const getHisLogs = async (req, res) => {
+  const sql = 'SELECT * FROM history_logs';
+
+  try {
+      const [results] = await db.execute(sql);
+      res.status(200).json({ products: results });
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+};
